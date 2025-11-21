@@ -434,6 +434,9 @@ export MAVEN_OPTS="-Xmx2g"
 ./mvnw spring-boot:run
 ```
 
+### Evidências
+![alt text](image.png)
+
 ### Buffer crescendo indefinidamente
 
 **Causa:** Kafka não está consumindo mensagens rápido o suficiente
@@ -477,6 +480,9 @@ Contribuições são bem-vindas! Por favor:
 5. Abra um Pull Request
 
 ---
+
+
+
 
 ## 📧 Contato
 
