@@ -1,0 +1,38 @@
+server:
+  tomcat:
+    threads:
+      max: 200 # Com Virtual Threads, não precisamos de milhares de threads do Tomcat
+  port: 8080
+
+spring:
+  application:
+    name: high-throughput-boleto
+  
+  # Habilita Virtual Threads (Java 21 + Spring Boot 3.2+)
+  threads:
+    virtual:
+      enabled: true
+
+  # Jackson configuration for Java 8 time types
+  # jackson:
+  #   serialization:
+  #     write-dates-as-timestamps: false
+  #   deserialization:
+  #     fail-on-unknown-properties: false
+  #   default-property-inclusion: non_null
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      # Otimizações de Performance
+      properties:
+        # Espera até 5ms para agrupar mensagens num lote (batch)
+        linger.ms: 5 
+        # Tamanho máximo do lote em bytes (ex: 32KB)
+        batch.size: 32768 
+        # Algoritmo de compressão (rápido e eficiente)
+        compression.type: lz4 
+        # Confirmação do líder é suficiente (compromisso entre velocidade/segurança)
+        acks: 1
